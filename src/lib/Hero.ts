@@ -3,6 +3,7 @@ interface Hero {
     firstName: string;
     lastName: string;
     statGenes: string;
+    level: number;
     visualGenes: string;
     rarity: number;
     shiny: boolean;
@@ -72,6 +73,4 @@ interface Hero {
     visualUnknown2: number;
     pjStatus: number|null;
     pjLevel: number|null;
-    
-    
 }

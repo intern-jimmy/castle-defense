@@ -1,4 +1,4 @@
-import Game from '$lib/game';
+import Game from '$lib/game1';
 import { getPlayerHeroes, getProfile } from '$lib/utils/dfkGraphHelper';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 

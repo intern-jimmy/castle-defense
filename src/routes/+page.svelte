@@ -1,16 +1,62 @@
 <script lang="ts">
+  import { goto } from '$app/navigation';
+  import { onMount } from 'svelte';
   import { SlideToggle } from '@skeletonlabs/skeleton';
+  import HeroCard from '$lib/ui/HeroCard.svelte';
 
-  import Game from '$lib/game';
+  import type Game from '$lib/Game';
+  import GameHelper from '$lib/Game-Helper';
+  import { gameStore } from '../stores/GameStore';
+  import { connectToWallet } from '$lib/utils/wallet';
+
+  onMount(() => {
+    const game = $gameStore;
+    game.selectedHeroes = []
+    game.id = null;
+    gameStore.set(game)
+  })
+
+
   let playerAddress = '';
   let minimizeProfile = false;
-  let game: Game|null = null;
+  let error = false;
+  let errorMessage = '';
+  
+  let selectedHeroes: Array<string> = [];
+
+  function toggleHeroSelection(heroId: string) {
+    const index = selectedHeroes.indexOf(heroId);
+    if(index === -1) {
+      selectedHeroes.push(heroId);
+    } else {
+      selectedHeroes.splice(index, 1);
+    }
+  }
 
   async function init() {
-    console.log(playerAddress)
-    game = await Game.initializeName(playerAddress);
+    gameStore.set(await GameHelper.initializeName(playerAddress));
     minimizeProfile = true
-    // Do something with the initialized game object
+  }
+
+  async function connect() {
+    playerAddress = await connectToWallet();
+    init();
+  }
+
+  function setSelected() {
+    console.log(selectedHeroes)
+    try {
+      gameStore.set( GameHelper.selectHeroes($gameStore, selectedHeroes));
+      gameStore.set( GameHelper.createMap($gameStore));
+
+      goto("/game")
+    }
+    catch(ex: Error | any) {
+      error = true;
+      errorMessage = ex.toString();
+      window.scrollTo({ top:0 })
+    }
+    
   }
 
 </script>
@@ -31,18 +77,33 @@
   <SlideToggle style="float:right;" on:click={() => {minimizeProfile = !minimizeProfile}}/>
 </div>
 
-{#if game}
-<div>
-  Select your heroes:
-  {#each game.heroes as hero}
-    <div>
-      <div>
-        <p>{hero.id}</p>
-        <p>{hero.mainClassStr}</p>
-        <p>{hero.subClassStr}</p>
-        <p>{hero.rarity}</p>
-      </div>
-    </div>
-  {/each}
-</div>
+{#if $gameStore.playerAddress.length === 0}
+  <button type="button" class="btn variant-filled-primary" on:click={() => connect()}>Connect Wallet</button>
 {/if}
+
+{#if error}
+    <aside class="alert variant-ghost error">
+        <!-- Icon -->
+        <div>(icon)</div>
+        <!-- Message -->
+        <div class="alert-message">
+            <h3 class="h3">Error:</h3>
+            <p>{errorMessage}</p>
+        </div>
+        <!-- Actions -->
+        <div class="alert-actions">(buttons)</div>
+    </aside>
+{/if}
+
+{#if $gameStore.playerAddress.length > 0}
+  <div>
+    <p>Select 4 heroes for yout party:</p>
+  </div>
+  <div class="grid grid-cols-3 gap-4">
+    {#each $gameStore.heroes as hero}
+      <HeroCard {hero} onToggleSelection={() => toggleHeroSelection(hero.id)}/>
+    {/each}
+  </div>
+  <div><button on:click={() => setSelected()}>Start Game</button></div>
+{/if}
+ 

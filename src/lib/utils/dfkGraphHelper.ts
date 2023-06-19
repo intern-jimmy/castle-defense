@@ -26,6 +26,7 @@ export async function getPlayerHeroes(id: string): Promise<Hero[]> {
         id
         firstName
         lastName
+        level
         owner {
           id
           name
