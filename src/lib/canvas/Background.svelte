@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { renderable } from './game';
-	import { normalTilemap } from '$lib/map/TileSet';
+	import { normalTilemap } from '../map/Tileset';
 
 	export let map: {
     background: string;
