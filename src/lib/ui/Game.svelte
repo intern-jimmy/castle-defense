@@ -4,7 +4,7 @@
   import Canvas from "$lib/canvas/Canvas.svelte";
   import Background from "$lib/canvas/Background.svelte";
   import FPS from "$lib/canvas/FPS.svelte";
-  import RoundManager from "$lib/RoundManager";
+  //import RoundManager from "$lib/RoundManager";
   
 
   let attemptedCommand: {hero: Hero|null; command: string; targetX: number; targetY: number; } = {hero: null, command: '', targetX: -1, targetY: -1};
@@ -104,8 +104,9 @@
       gameStore.round.validStart = true;
       return gameStore;
     })
-    let round = new RoundManager($gameStore);
-    round.startRound();
+    /*let round = new RoundManager($gameStore);
+    round.startRound();*/
+    alert("Go away Guy you know I am working on this.");
   }
   
 </script>

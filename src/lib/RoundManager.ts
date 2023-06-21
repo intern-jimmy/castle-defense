@@ -1,9 +1,7 @@
 //import { gameStore } from "../../stores/GameStore";
+/*
 import type Game from "./game";
-
-interface Character {
-  // Define the properties of a character
-}
+import type Enemy from "./Enemy";
 
 class RoundManager {
   game: Game;
@@ -25,9 +23,9 @@ class RoundManager {
     this.game.round.started = true;
 
     const numberOfVillains = this.getVillains();
-    for (let i = 0; i < numberOfVillains; i++) {
+    for (let i = 0; i < numberOfVillains.length; i++) {
       
-      this.attackCastle(villain);
+      this.attackCastle(this.getVillains()[i]);
     }
 
     this.gameLoopInterval = setInterval(() => this.gameLoop(), 1000); // Adjust the interval as needed
@@ -100,8 +98,8 @@ class RoundManager {
     // Adjust the villain's position based on movement speed and direction
   }
 
-  getVillains(): Array<Character> {
-    const villains: Array<Character> = [];
+  getVillains(): Array<Enemy> {
+    const villains: Array<Enemy> = [];
     const numRounds = this.game.round.number;
     const numHeroes = this.game.selectedHeroes.length;
     const heroLevels = this.game.selectedHeroes.reduce((total, hero) => total + hero.level, 0);
@@ -112,10 +110,9 @@ class RoundManager {
     return villains;
   }
 
-  function createVillain(): Character {
+  function createVillain(): Enemy {
     // Logic to create a new villain character
     // Return the created villain
+    return new Enemy();
   }
-}
-
-export default RoundManager;
+}*/
