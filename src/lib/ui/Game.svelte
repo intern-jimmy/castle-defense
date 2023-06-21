@@ -4,6 +4,7 @@
   import Canvas from "$lib/canvas/Canvas.svelte";
   import Background from "$lib/canvas/Background.svelte";
   import FPS from "$lib/canvas/FPS.svelte";
+	
   //import RoundManager from "$lib/RoundManager";
   
 
@@ -106,7 +107,7 @@
     })
     /*let round = new RoundManager($gameStore);
     round.startRound();*/
-    alert("Go away Guy you know I am working on this.");
+    window.open('https://www.youtube.com/watch?v=g_vZasFzMN4', '_blank').focus();
   }
   
 </script>
