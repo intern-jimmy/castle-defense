@@ -104,6 +104,8 @@
       <HeroCard {hero} onToggleSelection={() => toggleHeroSelection(hero.id)}/>
     {/each}
   </div>
-  <div><button on:click={() => setSelected()}>Start Game</button></div>
+  <div class="flex justify-center">
+    <button type="button" class="btn btn-xl bg-green-400 w-full ml-12 mr-12" on:click={() => setSelected()}>Start Game</button>
+  </div>
 {/if}
  

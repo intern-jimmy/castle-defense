@@ -4,6 +4,7 @@
   import Canvas from "$lib/canvas/Canvas.svelte";
   import Background from "$lib/canvas/Background.svelte";
   import FPS from "$lib/canvas/FPS.svelte";
+  import RoundManager from "$lib/RoundManager";
   
 
   let attemptedCommand: {hero: Hero|null; command: string; targetX: number; targetY: number; } = {hero: null, command: '', targetX: -1, targetY: -1};
@@ -99,6 +100,12 @@
 
   function startRound() {
     console.log("starting round");
+    gameStore.update((gameStore) => {
+      gameStore.round.validStart = true;
+      return gameStore;
+    })
+    let round = new RoundManager($gameStore);
+    round.startRound();
   }
   
 </script>
@@ -116,7 +123,7 @@
       <div class="canvas-container">
         {#if $gameStore.round.canStart}
           <div class="flex justify-center mb-4">
-            <button type="button" class="btn btn=lg variant-filled justify-center" on:click={startRound}>Start Round</button>
+            <button type="button" class="btn btn-xl bg-green-500 w-full  justify-center" on:click={startRound}>Start Round</button>
           </div>
         {/if}
         <Canvas clicked={recordClick}>
