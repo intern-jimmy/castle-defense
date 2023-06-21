@@ -17,7 +17,7 @@
 		const { context, width, height } = props;
 		// clear the canvas
 		context.clearRect(0, 0, width, height);
-		context.fillStyle = "#ff007f";
+		context.fillStyle = "white";
 		context.fillRect(0,0, width, height);
 
 
